@@ -1,31 +1,62 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Listado de asesores";
 }
-
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<h1>Listado de asesores</h1>
+<div ng-app="app" ng-controller="appController" ng-init="listarAsesores()">
+    <div class="row">
+        <div class="col-md-12">
+            <input type="button" class="btn btn-primary" value="Insertar" ng-click="insertarAsesor()" />
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    <div class="row">
+        <div class="col-md-2"><b>ID</b></div>
+        <div class="col-md-2"><b>Nombre</b></div>
+        <div class="col-md-2"><b>C&eacute;dula</b></div>
+        <div class="col-md-2"><b>C&oacute;digo</b></div>
+        <div class="col-md-2"><b>Tienda</b></div>
+        <div class="col-md-2">&nbsp;</div>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    <div class="row" ng-repeat="asesor in asesores">
+        <div class="col-md-2">{{asesor.AsesorId}}</div>
+        <div class="col-md-2">{{asesor.Nombre}}</div>
+        <div class="col-md-2">{{asesor.Cedula}}</div>
+        <div class="col-md-2">{{asesor.Codigo}}</div>
+        <div class="col-md-2">{{asesor.Tienda}}</div>
+        <div class="col-md-2">
+            <span class="fas fa-edit btn" aria-hidden="true" ng-click="editarAsesor(asesor)"></span>&nbsp;
+            <span class="fas fa-ban btn" aria-hidden="true" ng-click="eliminarAsesor(asesor)"></span>&nbsp;
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="editarAsesorModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarAsesorModalLabel">Editar asesor</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row form-group">
+                        <div class="col-md-6 col-form-label">Nombre: </div>
+                        <div class="col-md-6"><input type="text" ng-model="asesorActual.Nombre" class="form-control" /></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-6 col-form-label">C&eacute;dula: </div>
+                        <div class="col-md-6"><input type="text" ng-model="asesorActual.Cedula" class="form-control" /></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-6 col-form-label">C&oacute;digo: </div>
+                        <div class="col-md-6"><input type="text" ng-model="asesorActual.Codigo" class="form-control" /></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-6 col-form-label">Tienda: </div>
+                        <div class="col-md-6"><input type="text" ng-model="asesorActual.Tienda" class="form-control" /></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrarFormulario">Cancelar</button>
+                    <button type="button" class="btn btn-primary" ng-click="guardarAsesor()">Guardar</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
