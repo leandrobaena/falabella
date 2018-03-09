@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Reporte de ventas";
+}
+<h1>Reporte de ventas de garant&iacute;a extendida</h1>
+<div ng-app="app" ng-controller="ventaController">
+    <div class="row form-group">
+        <div class="col-md-3 col-form-label">Fecha inicio: </div>
+        <div class="col-md-3"><input type="text" ng-model="reporte.FechaInicio" class="form-control" id="fechaInicio" /></div>
+        <div class="col-md-3 col-form-label">Fecha fin: </div>
+        <div class="col-md-3"><input type="text" ng-model="reporte.FechaFin" class="form-control" id="fechaFin" /></div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-12" style="text-align: right">
+            <button type="button" class="btn btn-primary" ng-click="generarReporte()">Generar</button>
+        </div>
+    </div>
+</div>
+<script>
+    $('#fechaInicio').datepicker({
+        format: "yyyy-mm-dd",
+        uiLibrary: 'bootstrap4',
+        iconsLibrary: 'fontawesome',
+        locale: "es-co"
+    });
+
+    $('#fechaFin').datepicker({
+        format: "yyyy-mm-dd",
+        uiLibrary: 'bootstrap4',
+        iconsLibrary: 'fontawesome',
+        locale: "es-co"
+    });
+</script>

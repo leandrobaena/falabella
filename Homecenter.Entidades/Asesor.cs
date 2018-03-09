@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Homecenter.Entidades
+﻿namespace Homecenter.Entidades
 {
+    /// <summary>
+    /// Asesor que realiza la venta de un seguro
+    /// </summary>
     public class Asesor
     {
         #region Constructores

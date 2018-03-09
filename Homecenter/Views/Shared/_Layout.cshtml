@@ -8,20 +8,26 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/fonts/css/fontawesome-all.css" rel="stylesheet" />
+    <link href="~/Content/datapicker/css/gijgo.min.css" rel="stylesheet" />
     <script src="~/Scripts/angular.js"></script>
     <script src="~/Scripts/jquery-3.3.1.js"></script>
     <script src="~/Scripts/bootstrap.js"></script>
     <script src="~/Scripts/bootstrap-confirmation.min.js"></script>
     <script src="~/Scripts/angularHomecenter.js"></script>
+    <script src="~/Content/datapicker/js/gijgo.min.js"></script>
+    <script src="~/Content/datapicker/js/messages/messages.es-co.min.js"></script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Listado de asesores", "Index", "Home")</li>
-                </ul>
-            </div>
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+            </ul>
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Listado de asesores", "Listado", "Asesores")</li>
+                <li>@Html.ActionLink("Registro de venta", "Venta", "Ventas")</li>
+                <li>@Html.ActionLink("Reporte de ventas", "Reporte", "Ventas")</li>
+            </ul>
         </div>
     </div>
     <div class="container body-content">

@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Registro de venta";
+}
+<h1>Registrar venta garant&iacute;a extendida</h1>
+<div ng-app="app" ng-controller="ventaController">
+    <input type="hidden" ng-model="venta.AsesorId" />
+    <div class="row form-group">
+        <div class="col-md-6 col-form-label">C&eacute;dula: </div>
+        <div class="col-md-5"><input type="text" ng-model="asesor.Cedula" class="form-control" /></div>
+        <div class="col-md-1"><span class="btn fas fa-search" ng-click="buscarAsesorXCedula()"></span></div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-6 col-form-label">Nombre: </div>
+        <div class="col-md-6"><input type="text" ng-model="asesor.Nombre" class="form-control" readonly="readonly" /></div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-6 col-form-label">SKU Producto: </div>
+        <div class="col-md-6"><input type="text" ng-model="venta.SKU" class="form-control" /></div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-12" style="text-align: right">
+            <button type="button" class="btn btn-primary" ng-click="guardarVenta()">Guardar</button>
+        </div>
+    </div>
+</div>
