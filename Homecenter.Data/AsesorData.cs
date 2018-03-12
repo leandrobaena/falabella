@@ -37,7 +37,7 @@ namespace Homecenter.Data
         /// </summary>
         /// <param name="inicio">Registro inicial a traer</param>
         /// <param name="numRecords">Número de regstros a traer</param>
-        /// <returns></returns>
+        /// <returns>Listado de asesores</returns>
         public List<Asesor> Listar(int inicio, int numRecords)
         {
             return asesores.OrderBy(x => x.AsesorId).Skip(inicio).Take(numRecords).ToList();
@@ -51,7 +51,7 @@ namespace Homecenter.Data
         /// <param name="cedula">Cédula del asesor</param>
         /// <param name="codigo">Código del asesor</param>
         /// <param name="tienda">Tienda del asesor</param>
-        /// <returns></returns>
+        /// <returns>Asesor actualizado</returns>
         public Asesor Actualizar(int asesorId, string nombre, string cedula, string codigo, string tienda)
         {
             Asesor asesor = this.asesores.Where(x => x.AsesorId == asesorId).FirstOrDefault();

@@ -104,6 +104,24 @@ app.controller("ventaController", function ($scope, $http) {
         });
     }
 
+    $scope.buscarGarantiaXSKU = function () {
+        $http({
+            method: "post",
+            url: "/Garantias/BuscarXSKU",
+            data: {
+                sku: $scope.venta.SKU
+            },
+            dataType: "json"
+        }).then(function (response) {
+            if (!response.data) {
+                alert("Garantía no encontrada");
+            } else {
+                $scope.garantia = response.data;
+                $scope.garantia.TotalComision = ($scope.garantia.PrecioSinIva * $scope.garantia.PorcentajeComision) / 100;
+            }
+        });
+    }
+
     $scope.guardarVenta = function () {
         if ($scope.venta.AsesorId != 0) {//Válido
             $http({
@@ -140,4 +158,82 @@ app.controller("ventaController", function ($scope, $http) {
             window.open("/reportes/reporte.xlsx");
         });
     };
+});
+
+app.controller("garantiasController", function ($scope, $http) {
+    $scope.garantias;
+    $scope.garantiaActual;
+
+    $scope.listarGarantias = function () {
+        $http({
+            method: "get",
+            url: "/Garantias/ListarGarantias?inicio=" + 0 + "&numRegistros=" + 10,
+            dataType: "json"
+        }).then(function (response) {
+            $scope.garantias = response.data;
+        });
+    };
+
+    $scope.editarGarantia = function (garantia) {
+        console.log(garantia);
+        $scope.garantiaActual = garantia;
+        $("#editarGarantiaModalLabel").html("Editar garantía");
+        $("#editarGarantiaModal").modal("show");
+    }
+
+    $scope.insertarGarantia = function () {
+        $scope.garantiaActual = {
+            GarantiaId: 0,
+            Categoria: "",
+            SKU: "",
+            Descripcion: "",
+            PrecioSinIva: 0,
+            PrecioConIva: 0,
+            PorcentajeComision: 0
+        };
+        $("#editarGarantiaModalLabel").html("Crear garantía");
+        $("#editarGarantiaModal").modal("show");
+    }
+
+    $scope.guardarGarantia = function () {
+        if ($scope.garantiaActual.GarantiaId == 0) {//Insertar
+            $http({
+                method: "post",
+                url: "/Garantias/InsertarGarantia",
+                data: JSON.stringify($scope.garantiaActual),
+                dataType: "json"
+            }).then(function (response) {
+                alert("Garantía creada");
+                $scope.listarGarantias();
+                $("#editarGarantiaModal").modal("hide");
+            });
+        } else {
+            $http({
+                method: "post",
+                url: "/Garantias/ActualizarGarantia",
+                data: JSON.stringify($scope.garantiaActual),
+                dataType: "json"
+            }).then(function (response) {
+                alert("Garantía actualizada");
+                $scope.listarGarantias();
+                $("#editarGarantiaModal").modal("hide");
+            });
+        }
+    };
+
+    $scope.eliminarGarantia = function (garantia) {
+        if (confirm("¿Está seguro que desea eliminar la garantía?")) {
+            $scope.garantiaActual = garantia;
+            $http({
+                method: "post",
+                url: "/Garantias/EliminarGarantia",
+                data: JSON.stringify($scope.garantiaActual),
+                dataType: "json"
+            }).then(function (response) {
+                alert("Garantía eliminada");
+                $scope.listarGarantias();
+                $("#editarGarantiaModal").modal("hide");
+            });
+        }
+    }
 });

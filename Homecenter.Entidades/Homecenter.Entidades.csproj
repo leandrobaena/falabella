@@ -41,7 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ReporteVenta.cs" />
-    <Compile Include="MaestroGEXTId.cs" />
+    <Compile Include="Garantia.cs" />
     <Compile Include="Venta.cs" />
     <Compile Include="Asesor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

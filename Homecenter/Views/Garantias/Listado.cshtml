@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "Listado de garantías";
+}
+<h1>Listado de garant&iacute;as</h1>
+<div ng-app="app" ng-controller="garantiasController" ng-init="listarGarantias()">
+    <div class="row">
+        <div class="col-md-12">
+            <input type="button" class="btn btn-primary" value="Insertar" ng-click="insertarGarantia()" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1"><b>ID</b></div>
+        <div class="col-md-2"><b>Categor&iacute;a</b></div>
+        <div class="col-md-2"><b>SKU</b></div>
+        <div class="col-md-2"><b>Descripci&oacute;n</b></div>
+        <div class="col-md-1"><b>Precio sin IVA</b></div>
+        <div class="col-md-1"><b>Precio con IVA</b></div>
+        <div class="col-md-1"><b>Porcentaje Comisi&oacute;n</b></div>
+        <div class="col-md-2">&nbsp;</div>
+    </div>
+    <div class="row" ng-repeat="garantia in garantias">
+        <div class="col-md-1">{{garantia.GarantiaId}}</div>
+        <div class="col-md-2">{{garantia.Categoria}}</div>
+        <div class="col-md-2">{{garantia.SKU}}</div>
+        <div class="col-md-2">{{garantia.Descripcion}}</div>
+        <div class="col-md-1">{{garantia.PrecioSinIva}}</div>
+        <div class="col-md-1">{{garantia.PrecioConIva}}</div>
+        <div class="col-md-1">{{garantia.PorcentajeComision}}</div>
+        <div class="col-md-2">
+            <span class="fas fa-edit btn" aria-hidden="true" ng-click="editarGarantia(garantia)"></span>&nbsp;
+            <span class="fas fa-ban btn" aria-hidden="true" ng-click="eliminarGarantia(garantia)"></span>&nbsp;
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="editarGarantiaModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarGarantiaModalLabel">Editar garant&iacute;a</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row form-group">
+                        <div class="col-md-6 col-form-label">Categor&iacute;a: </div>
+                        <div class="col-md-6"><input type="text" ng-model="garantiaActual.Categoria" class="form-control" /></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-6 col-form-label">SKU: </div>
+                        <div class="col-md-6"><input type="text" ng-model="garantiaActual.SKU" class="form-control" /></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-6 col-form-label">Descripci&oacute;n: </div>
+                        <div class="col-md-6"><input type="text" ng-model="garantiaActual.Descripcion" class="form-control" /></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-6 col-form-label">Precio sin IVA: </div>
+                        <div class="col-md-6"><input type="text" ng-model="garantiaActual.PrecioSinIva" class="form-control" /></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-6 col-form-label">Precio con IVA: </div>
+                        <div class="col-md-6"><input type="text" ng-model="garantiaActual.PrecioConIva" class="form-control" /></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-6 col-form-label">Porcentaje comisi&oacute;n: </div>
+                        <div class="col-md-6"><input type="text" ng-model="garantiaActual.PorcentajeComision" class="form-control" /></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrarFormulario">Cancelar</button>
+                    <button type="button" class="btn btn-primary" ng-click="guardarGarantia()">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

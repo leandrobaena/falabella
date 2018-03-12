@@ -15,7 +15,32 @@
     </div>
     <div class="row form-group">
         <div class="col-md-6 col-form-label">SKU Producto: </div>
-        <div class="col-md-6"><input type="text" ng-model="venta.SKU" class="form-control" /></div>
+        <div class="col-md-5"><input type="text" ng-model="venta.SKU" class="form-control" /></div>
+        <div class="col-md-1"><span class="btn fas fa-search" ng-click="buscarGarantiaXSKU()"></span></div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-6 col-form-label">Categor&iacute;a: </div>
+        <div class="col-md-6"><input type="text" ng-model="garantia.Categoria" class="form-control" readonly="readonly" /></div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-6 col-form-label">Decripci&oacute;n: </div>
+        <div class="col-md-6"><input type="text" ng-model="garantia.Descripcion" class="form-control" readonly="readonly" /></div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-6 col-form-label">Precio sin IVA: </div>
+        <div class="col-md-6"><input type="text" ng-model="garantia.PrecioSinIva" class="form-control" readonly="readonly" /></div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-6 col-form-label">Precio con IVA: </div>
+        <div class="col-md-6"><input type="text" ng-model="garantia.PrecioConIva" class="form-control" readonly="readonly" /></div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-6 col-form-label">Porcentaje Comisi&oacute;n: </div>
+        <div class="col-md-6"><input type="text" ng-model="garantia.PorcentajeComision" class="form-control" readonly="readonly" /></div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-6 col-form-label">Total comisi&oacute;n: </div>
+        <div class="col-md-6"><input type="text" ng-model="garantia.TotalComision" class="form-control" readonly="readonly" /></div>
     </div>
     <div class="row form-group">
         <div class="col-md-12" style="text-align: right">

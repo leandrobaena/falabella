@@ -5,20 +5,20 @@ namespace Homecenter.Entidades
     /// <summary>
     /// Mestro de garantías extendidas
     /// </summary>
-    public class MaestroGEXT
+    public class Garantia
     {
         #region Constructores
         /// <summary>
         /// Constructor por defecto, inicializa con valores por defecto
         /// </summary>
-        public MaestroGEXT()
+        public Garantia()
         {
-            this.MaestroGEXTId = 0;
+            this.GarantiaId = 0;
             this.Categoria = "";
             this.SKU = "";
             this.Descripcion = "";
-            this.PrecionSinIva = 0;
-            this.PrecionConIva = 0;
+            this.PrecioSinIva = 0;
+            this.PrecioConIva = 0;
             this.PorcentajeComision = 0;
         }
 
@@ -26,9 +26,9 @@ namespace Homecenter.Entidades
         /// Inicializa con valores por defecto y con el identificador determinado
         /// </summary>
         /// <param name="id">Identificador de la venta</param>
-        public MaestroGEXT(int id) : this()
+        public Garantia(int id) : this()
         {
-            this.MaestroGEXTId = id;
+            this.GarantiaId = id;
         }
         #endregion
 
@@ -36,7 +36,7 @@ namespace Homecenter.Entidades
         /// <summary>
         /// Identificador del maestro de garantías extendidas
         /// </summary>
-        public int MaestroGEXTId { get; set; }
+        public int GarantiaId { get; set; }
 
         /// <summary>
         /// Categoría de la garantía
@@ -56,17 +56,17 @@ namespace Homecenter.Entidades
         /// <summary>
         /// Precio de la garantía sin IVA
         /// </summary>
-        public float PrecionSinIva { get; set; }
+        public decimal PrecioSinIva { get; set; }
 
         /// <summary>
         /// Precio de la garantía con IVA
         /// </summary>
-        public float PrecionConIva { get; set; }
+        public decimal PrecioConIva { get; set; }
 
         /// <summary>
         /// Porcentaje de comisión del asesor
         /// </summary>
-        public float PorcentajeComision { get; set; }
+        public decimal PorcentajeComision { get; set; }
         #endregion
     }
 }
