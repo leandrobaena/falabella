@@ -30,7 +30,7 @@ namespace Homecenter.Business
         public Venta Insertar(Venta venta)
         {
             VentaData data = new VentaData(this.cadenaConexion);
-            return data.Insertar(venta.AsesorId, venta.SKU);
+            return data.Insertar(venta.AsesorId, venta.SKU, venta.CedulaCliente, venta.SKUElectrodomestico, venta.ValorComision);
         }
 
         /// <summary>

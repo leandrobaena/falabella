@@ -17,6 +17,10 @@ namespace Homecenter.Controllers
         /// <returns>Listado de garantías</returns>
         public ActionResult Listado()
         {
+            if (Session["usuario"] == null)
+            {
+                return new RedirectResult("/Account/Login");
+            }
             return View();
         }
 
@@ -80,6 +84,7 @@ namespace Homecenter.Controllers
             Garantia garantia = manager.BuscarXSKU(sku);
             return new JsonResult() { Data = garantia };
         }
+
         #endregion
     }
 }

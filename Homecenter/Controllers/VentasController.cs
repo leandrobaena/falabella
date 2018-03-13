@@ -22,6 +22,10 @@ namespace Homecenter.Controllers
         /// <returns>Listado de asesores</returns>
         public ActionResult Listado()
         {
+            if (Session["usuario"] == null)
+            {
+                return new RedirectResult("/Account/Login");
+            }
             return View();
         }
 
@@ -43,6 +47,10 @@ namespace Homecenter.Controllers
         /// <returns>Página de registro de venta</returns>
         public ActionResult Venta()
         {
+            if (Session["usuario"] == null)
+            {
+                return new RedirectResult("/Account/Login");
+            }
             return View();
         }
 
@@ -52,6 +60,10 @@ namespace Homecenter.Controllers
         /// <returns>Página de solicitud de reporte</returns>
         public ActionResult Reporte()
         {
+            if (Session["usuario"] == null)
+            {
+                return new RedirectResult("/Account/Login");
+            }
             return View();
         }
 
@@ -135,11 +147,23 @@ namespace Homecenter.Controllers
                 DataType = new EnumValue<CellValues>(CellValues.String)
             }, new Cell()
             {
-                CellValue = new CellValue(venta.SKU),
+                CellValue = new CellValue(venta.SKUElectrodomestico),
                 DataType = new EnumValue<CellValues>(CellValues.String)
             }, new Cell()
             {
                 CellValue = new CellValue(venta.FechaRegistro.ToString("yyyy-MM-dd HH:mm:ss")),
+                DataType = new EnumValue<CellValues>(CellValues.String)
+            }, new Cell()
+            {
+                CellValue = new CellValue(venta.CedulaCliente),
+                DataType = new EnumValue<CellValues>(CellValues.String)
+            }, new Cell()
+            {
+                CellValue = new CellValue(venta.SKU),
+                DataType = new EnumValue<CellValues>(CellValues.String)
+            }, new Cell()
+            {
+                CellValue = new CellValue(venta.ValorComision.ToString()),
                 DataType = new EnumValue<CellValues>(CellValues.String)
             });
             return row;
@@ -163,11 +187,11 @@ namespace Homecenter.Controllers
                 DataType = new EnumValue<CellValues>(CellValues.String)
             }, new Cell()
             {
-                CellValue = new CellValue("Cédula"),
+                CellValue = new CellValue("Cédula Asesor"),
                 DataType = new EnumValue<CellValues>(CellValues.String)
             }, new Cell()
             {
-                CellValue = new CellValue("Código"),
+                CellValue = new CellValue("Código Asesor"),
                 DataType = new EnumValue<CellValues>(CellValues.String)
             }, new Cell()
             {
@@ -175,11 +199,23 @@ namespace Homecenter.Controllers
                 DataType = new EnumValue<CellValues>(CellValues.String)
             }, new Cell()
             {
-                CellValue = new CellValue("SKU"),
+                CellValue = new CellValue("SKU Electrodoméstico"),
                 DataType = new EnumValue<CellValues>(CellValues.String)
             }, new Cell()
             {
                 CellValue = new CellValue("Fecha"),
+                DataType = new EnumValue<CellValues>(CellValues.String)
+            }, new Cell()
+            {
+                CellValue = new CellValue("Cédula cliente"),
+                DataType = new EnumValue<CellValues>(CellValues.String)
+            }, new Cell()
+            {
+                CellValue = new CellValue("SKU Garantía"),
+                DataType = new EnumValue<CellValues>(CellValues.String)
+            }, new Cell()
+            {
+                CellValue = new CellValue("Valor comisión"),
                 DataType = new EnumValue<CellValues>(CellValues.String)
             });
             return row;

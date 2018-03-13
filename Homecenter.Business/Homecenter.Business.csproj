@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GarantiaManager.cs" />
+    <Compile Include="UsuarioManager.cs" />
     <Compile Include="VentaManager.cs" />
     <Compile Include="AsesorManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -14,6 +14,10 @@ namespace Homecenter.Controllers
         /// <returns>Página de inicio</returns>
         public ActionResult Index()
         {
+            if (Session["usuario"] == null)
+            {
+                return new RedirectResult("/Account/Login");
+            }
             return View();
         }
         #endregion

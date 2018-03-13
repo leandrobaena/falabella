@@ -17,6 +17,9 @@ namespace Homecenter.Entidades
             this.AsesorId = 0;
             this.SKU = "";
             this.FechaRegistro = DateTime.MinValue;
+            this.CedulaCliente = "";
+            this.SKUElectrodomestico = "";
+            this.ValorComision = 0;
         }
 
         /// <summary>
@@ -49,6 +52,21 @@ namespace Homecenter.Entidades
         /// Fecha de la venta
         /// </summary>
         public DateTime FechaRegistro { get; set; }
+
+        /// <summary>
+        /// Cédula del cliente
+        /// </summary>
+        public string CedulaCliente { get; set; }
+
+        /// <summary>
+        /// SKU del electrodoméstico
+        /// </summary>
+        public string SKUElectrodomestico { get; set; }
+
+        /// <summary>
+        /// Valor comisionado por el asesor
+        /// </summary>
+        public decimal ValorComision { get; set; }
         #endregion
     }
 }

@@ -42,6 +42,8 @@
   <ItemGroup>
     <Compile Include="ReporteVenta.cs" />
     <Compile Include="Garantia.cs" />
+    <Compile Include="Perfil.cs" />
+    <Compile Include="Usuario.cs" />
     <Compile Include="Venta.cs" />
     <Compile Include="Asesor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

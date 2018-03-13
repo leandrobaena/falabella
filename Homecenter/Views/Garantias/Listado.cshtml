@@ -2,34 +2,41 @@
 @{
     ViewBag.Title = "Listado de garantías";
 }
-<h1>Listado de garant&iacute;as</h1>
+<h1 class="headerPage">Listado de garant&iacute;as</h1>
 <div ng-app="app" ng-controller="garantiasController" ng-init="listarGarantias()">
     <div class="row">
         <div class="col-md-12">
             <input type="button" class="btn btn-primary" value="Insertar" ng-click="insertarGarantia()" />
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-1"><b>ID</b></div>
-        <div class="col-md-2"><b>Categor&iacute;a</b></div>
-        <div class="col-md-2"><b>SKU</b></div>
-        <div class="col-md-2"><b>Descripci&oacute;n</b></div>
-        <div class="col-md-1"><b>Precio sin IVA</b></div>
-        <div class="col-md-1"><b>Precio con IVA</b></div>
-        <div class="col-md-1"><b>Porcentaje Comisi&oacute;n</b></div>
-        <div class="col-md-2">&nbsp;</div>
-    </div>
-    <div class="row" ng-repeat="garantia in garantias">
-        <div class="col-md-1">{{garantia.GarantiaId}}</div>
-        <div class="col-md-2">{{garantia.Categoria}}</div>
-        <div class="col-md-2">{{garantia.SKU}}</div>
-        <div class="col-md-2">{{garantia.Descripcion}}</div>
-        <div class="col-md-1">{{garantia.PrecioSinIva}}</div>
-        <div class="col-md-1">{{garantia.PrecioConIva}}</div>
-        <div class="col-md-1">{{garantia.PorcentajeComision}}</div>
-        <div class="col-md-2">
-            <span class="fas fa-edit btn" aria-hidden="true" ng-click="editarGarantia(garantia)"></span>&nbsp;
-            <span class="fas fa-ban btn" aria-hidden="true" ng-click="eliminarGarantia(garantia)"></span>&nbsp;
+    <div class="tableResult">
+        <div class="row headerTable">
+            <div class="col-md-1 headerColumn">ID</div>
+            <div class="col-md-2 headerColumn">Categor&iacute;a</div>
+            <div class="col-md-2 headerColumn">SKU</div>
+            <div class="col-md-2 headerColumn">Descripci&oacute;n</div>
+            <div class="col-md-1 headerColumn">Precio sin IVA</div>
+            <div class="col-md-1 headerColumn">Precio con IVA</div>
+            <div class="col-md-1 headerColumn">Porcentaje Comisi&oacute;n</div>
+            <div class="col-md-2">&nbsp;</div>
+        </div>
+        <div class="row bodyTable" ng-repeat="garantia in garantias">
+            <div class="col-md-1">{{garantia.GarantiaId}}</div>
+            <div class="col-md-2">{{garantia.Categoria}}</div>
+            <div class="col-md-2">{{garantia.SKU}}</div>
+            <div class="col-md-2">{{garantia.Descripcion}}</div>
+            <div class="col-md-1">{{garantia.PrecioSinIva}}</div>
+            <div class="col-md-1">{{garantia.PrecioConIva}}</div>
+            <div class="col-md-1">{{garantia.PorcentajeComision}}</div>
+            @{
+                if (((List<Homecenter.Entidades.Perfil>)Session["perfiles"]).Where(x => x.Nombre == "Administrador").Count() > 0)
+                {
+                    <div class="col-md-2">
+                        <span class="fas fa-edit btn" aria-hidden="true" ng-click="editarGarantia(garantia)"></span>&nbsp;
+                        <span class="fas fa-ban btn" aria-hidden="true" ng-click="eliminarGarantia(garantia)"></span>&nbsp;
+                    </div>
+                }
+            }
         </div>
     </div>
     <!-- Modal -->
@@ -39,36 +46,44 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="editarGarantiaModalLabel">Editar garant&iacute;a</h5>
                 </div>
-                <div class="modal-body">
-                    <div class="row form-group">
-                        <div class="col-md-6 col-form-label">Categor&iacute;a: </div>
-                        <div class="col-md-6"><input type="text" ng-model="garantiaActual.Categoria" class="form-control" /></div>
+                <form name="formEditarGarantia" novalidate>
+                    <div class="modal-body">
+                        <div class="row form-group">
+                            <div class="col-md-6 col-form-label">Categor&iacute;a: </div>
+                            <div class="col-md-6"><input type="text" ng-model="garantiaActual.Categoria" class="form-control" ng-maxlength="50" ng-minlength="1" required placeholder="Categoría" name="categoria" /></div>
+                            <p ng-show="formEditarGarantia.categoria.$invalid && !formEditarGarantia.categoria.$pristine" class="alert-danger">Debe ingresar una categor&iacute;a correcta</p>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-6 col-form-label">SKU: </div>
+                            <div class="col-md-6"><input type="text" ng-model="garantiaActual.SKU" class="form-control" ng-maxlength="200" ng-minlength="1" required placeholder="SKU" ng-pattern="/^\d+$/" name="sku" /></div>
+                            <p ng-show="formEditarGarantia.sku.$invalid && !formEditarGarantia.sku.$pristine" class="alert-danger">Debe ingresar un SKU correcto</p>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-6 col-form-label">Descripci&oacute;n: </div>
+                            <div class="col-md-6"><input type="text" ng-model="garantiaActual.Descripcion" class="form-control" ng-maxlength="200" ng-minlength="1" required placeholder="Descripción" name="descripcion" /></div>
+                            <p ng-show="formEditarGarantia.descripcion.$invalid && !formEditarGarantia.decripcion.$pristine" class="alert-danger">Debe ingresar una descripci&oacute;n correcta</p>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-6 col-form-label">Precio sin IVA: </div>
+                            <div class="col-md-6"><input type="text" ng-model="garantiaActual.PrecioSinIva" class="form-control" ng-maxlength="20" ng-minlength="1" required ng-pattern="/^[0-9\.]+$/" name="precioSinIva" /></div>
+                            <p ng-show="formEditarGarantia.precioSinIva.$invalid && !formEditarGarantia.precioSinIva.$pristine" class="alert-danger">Debe ingresar un precio sin IVA correcto</p>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-6 col-form-label">Precio con IVA: </div>
+                            <div class="col-md-6"><input type="text" ng-model="garantiaActual.PrecioConIva" class="form-control" ng-maxlength="20" ng-minlength="1" required ng-pattern="/^[0-9\.]+$/" name="precioConIva" /></div>
+                            <p ng-show="formEditarGarantia.precioConIva.$invalid && !formEditarGarantia.precioConIva.$pristine" class="alert-danger">Debe ingresar un precio con IVA correcto</p>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-6 col-form-label">Porcentaje comisi&oacute;n: </div>
+                            <div class="col-md-6"><input type="text" ng-model="garantiaActual.PorcentajeComision" class="form-control" ng-maxlength="20" ng-minlength="1" required ng-pattern="/^[0-9\.]+$/" name="porcentajeComision" /></div>
+                            <p ng-show="formEditarGarantia.porcentajeComision.$invalid && !formEditarGarantia.porcentajeComision.$pristine" class="alert-danger">Debe ingresar un porcentaje de comisi&oacute;n correcto</p>
+                        </div>
                     </div>
-                    <div class="row form-group">
-                        <div class="col-md-6 col-form-label">SKU: </div>
-                        <div class="col-md-6"><input type="text" ng-model="garantiaActual.SKU" class="form-control" /></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrarFormulario">Cancelar</button>
+                        <button type="button" class="btn btn-primary" ng-click="guardarGarantia(formEditarGarantia.$valid)" ng-disabled="formEditarGarantia.$invalid">Guardar</button>
                     </div>
-                    <div class="row form-group">
-                        <div class="col-md-6 col-form-label">Descripci&oacute;n: </div>
-                        <div class="col-md-6"><input type="text" ng-model="garantiaActual.Descripcion" class="form-control" /></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-md-6 col-form-label">Precio sin IVA: </div>
-                        <div class="col-md-6"><input type="text" ng-model="garantiaActual.PrecioSinIva" class="form-control" /></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-md-6 col-form-label">Precio con IVA: </div>
-                        <div class="col-md-6"><input type="text" ng-model="garantiaActual.PrecioConIva" class="form-control" /></div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-md-6 col-form-label">Porcentaje comisi&oacute;n: </div>
-                        <div class="col-md-6"><input type="text" ng-model="garantiaActual.PorcentajeComision" class="form-control" /></div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cerrarFormulario">Cancelar</button>
-                    <button type="button" class="btn btn-primary" ng-click="guardarGarantia()">Guardar</button>
-                </div>
+                </form>
             </div>
         </div>
     </div>

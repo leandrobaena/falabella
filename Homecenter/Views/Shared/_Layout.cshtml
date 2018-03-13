@@ -10,6 +10,7 @@
     <link href="~/fonts/css/fontawesome-all.css" rel="stylesheet" />
     <link href="~/Content/datapicker/css/gijgo.min.css" rel="stylesheet" />
     <script src="~/Scripts/angular.js"></script>
+    <script src="~/Scripts/angular-messages.min.js"></script>
     <script src="~/Scripts/jquery-3.3.1.js"></script>
     <script src="~/Scripts/bootstrap.js"></script>
     <script src="~/Scripts/bootstrap-confirmation.min.js"></script>
@@ -23,14 +24,40 @@
             <ul class="nav navbar-nav">
                 <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
             </ul>
+            @{
+                if (((List<Homecenter.Entidades.Perfil>)Session["perfiles"]).Where(x => x.Nombre == "Administrador").Count() > 0)
+                {
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Listado de asesores", "Listado", "Asesores")</li>
+                    </ul>
+                }
+            }
+            @{
+                if (((List<Homecenter.Entidades.Perfil>)Session["perfiles"]).Where(x => x.Nombre == "Asesor").Count() > 0)
+                {
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Registro de venta", "Venta", "Ventas")</li>
+                    </ul>
+                }
+            }
+            @{
+                if (((List<Homecenter.Entidades.Perfil>)Session["perfiles"]).Where(x => x.Nombre == "Administrador").Count() > 0)
+                {
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Reporte de ventas", "Reporte", "Ventas")</li>
+                    </ul>
+                }
+            }
+            @{
+                if (((List<Homecenter.Entidades.Perfil>)Session["perfiles"]).Where(x => x.Nombre == "Administrador" || x.Nombre == "Asesor").Count() > 0)
+                {
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Listado de garantías", "Listado", "Garantias")</li>
+                    </ul>
+                }
+            }
             <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Listado de asesores", "Listado", "Asesores")</li>
-                <li>@Html.ActionLink("Registro de venta", "Venta", "Ventas")</li>
-                <li>@Html.ActionLink("Reporte de ventas", "Reporte", "Ventas")</li>
-            </ul>
-            <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Listado de garantías", "Listado", "Garantias")</li>
-                <li>@Html.ActionLink("Registro de venta", "Venta", "Ventas")</li>
+                <li>@Html.ActionLink("Cerrar sesión", "Logout", "Account")</li>
             </ul>
         </div>
     </div>

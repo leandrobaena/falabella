@@ -42,6 +42,21 @@ namespace Homecenter.Entidades
         /// Fecha de la venta
         /// </summary>
         public DateTime FechaRegistro { get; set; }
+
+        /// <summary>
+        /// Cédula del cliente
+        /// </summary>
+        public string CedulaCliente { get; set; }
+
+        /// <summary>
+        /// SKU del electrodoméstico
+        /// </summary>
+        public string SKUElectrodomestico { get; set; }
+
+        /// <summary>
+        /// Valor de la comisión
+        /// </summary>
+        public decimal ValorComision { get; set; }
         #endregion
     }
 }

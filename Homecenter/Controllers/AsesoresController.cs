@@ -17,6 +17,10 @@ namespace Homecenter.Controllers
         /// <returns>Listado de asesores</returns>
         public ActionResult Listado()
         {
+            if (Session["usuario"] == null)
+            {
+                return new RedirectResult("/Account/Login");
+            }
             return View();
         }
 

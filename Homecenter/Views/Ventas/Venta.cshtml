@@ -1,50 +1,66 @@
 ﻿@{
     ViewBag.Title = "Registro de venta";
 }
-<h1>Registrar venta garant&iacute;a extendida</h1>
+<h1 class="headerPage">Registrar venta garant&iacute;a extendida</h1>
 <div ng-app="app" ng-controller="ventaController">
-    <input type="hidden" ng-model="venta.AsesorId" />
-    <div class="row form-group">
-        <div class="col-md-6 col-form-label">C&eacute;dula: </div>
-        <div class="col-md-5"><input type="text" ng-model="asesor.Cedula" class="form-control" /></div>
-        <div class="col-md-1"><span class="btn fas fa-search" ng-click="buscarAsesorXCedula()"></span></div>
-    </div>
-    <div class="row form-group">
-        <div class="col-md-6 col-form-label">Nombre: </div>
-        <div class="col-md-6"><input type="text" ng-model="asesor.Nombre" class="form-control" readonly="readonly" /></div>
-    </div>
-    <div class="row form-group">
-        <div class="col-md-6 col-form-label">SKU Producto: </div>
-        <div class="col-md-5"><input type="text" ng-model="venta.SKU" class="form-control" /></div>
-        <div class="col-md-1"><span class="btn fas fa-search" ng-click="buscarGarantiaXSKU()"></span></div>
-    </div>
-    <div class="row form-group">
-        <div class="col-md-6 col-form-label">Categor&iacute;a: </div>
-        <div class="col-md-6"><input type="text" ng-model="garantia.Categoria" class="form-control" readonly="readonly" /></div>
-    </div>
-    <div class="row form-group">
-        <div class="col-md-6 col-form-label">Decripci&oacute;n: </div>
-        <div class="col-md-6"><input type="text" ng-model="garantia.Descripcion" class="form-control" readonly="readonly" /></div>
-    </div>
-    <div class="row form-group">
-        <div class="col-md-6 col-form-label">Precio sin IVA: </div>
-        <div class="col-md-6"><input type="text" ng-model="garantia.PrecioSinIva" class="form-control" readonly="readonly" /></div>
-    </div>
-    <div class="row form-group">
-        <div class="col-md-6 col-form-label">Precio con IVA: </div>
-        <div class="col-md-6"><input type="text" ng-model="garantia.PrecioConIva" class="form-control" readonly="readonly" /></div>
-    </div>
-    <div class="row form-group">
-        <div class="col-md-6 col-form-label">Porcentaje Comisi&oacute;n: </div>
-        <div class="col-md-6"><input type="text" ng-model="garantia.PorcentajeComision" class="form-control" readonly="readonly" /></div>
-    </div>
-    <div class="row form-group">
-        <div class="col-md-6 col-form-label">Total comisi&oacute;n: </div>
-        <div class="col-md-6"><input type="text" ng-model="garantia.TotalComision" class="form-control" readonly="readonly" /></div>
-    </div>
-    <div class="row form-group">
-        <div class="col-md-12" style="text-align: right">
-            <button type="button" class="btn btn-primary" ng-click="guardarVenta()">Guardar</button>
+    <form name="formVenta" novalidate>
+        <input type="hidden" ng-model="venta.AsesorId" />
+        <div class="row form-group">
+            <div class="col-md-6 col-form-label">C&eacute;dula asesor: </div>
+            <div class="col-md-5"><input type="text" ng-model="asesor.Cedula" class="form-control" ng-maxlength="10" ng-minlength="6" required placeholder="Cédula asesor" ng-pattern="/^\d+$/" name="cedula"  /></div>
+            <div class="col-md-1"><span class="btn fas fa-search" ng-click="buscarAsesorXCedula()"></span></div>
+            <p ng-show="formVenta.cedula.$invalid && !formVenta.cedula.$pristine" class="alert-danger">Debe ingresar una c&eacute;dula correcta</p>
         </div>
-    </div>
+        <div class="row form-group">
+            <div class="col-md-6 col-form-label">Nombre asesor: </div>
+            <div class="col-md-6"><input type="text" ng-model="asesor.Nombre" class="form-control" readonly="readonly" /></div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-6 col-form-label">SKU Electrodom&eacute;stico: </div>
+            <div class="col-md-6"><input type="text" ng-model="venta.SKUElectrodomestico" class="form-control" ng-maxlength="50" ng-minlength="2" required ng-pattern="/^\d+$/" name="skuElectrodomestico" /></div>
+            <p ng-show="formVenta.skuElectrodomestico.$invalid && !formVenta.skuElectrodomestico.$pristine" class="alert-danger">Debe ingresar un SKU de electrodom&eacute;stico correcto</p>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-6 col-form-label">C&eacute;dula cliente: </div>
+            <div class="col-md-6"><input type="text" ng-model="venta.CedulaCliente" class="form-control" ng-maxlength="10" ng-minlength="6" required ng-pattern="/^\d+$/" name="cedulaCliente" /></div>
+            <p ng-show="formVenta.cedulaCliente.$invalid && !formVenta.cedulaCliente.$pristine" class="alert-danger">Debe ingresar una c&eacute;dula de cliente correcta</p>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-6 col-form-label">SKU Garant&iacute;a: </div>
+            <div class="col-md-5"><input type="text" ng-model="venta.SKU" class="form-control" ng-maxlength="50" ng-minlength="2" required ng-pattern="/^\d+$/" name="sku" /></div>
+            <div class="col-md-1"><span class="btn fas fa-search" ng-click="buscarGarantiaXSKU()"></span></div>
+            <p ng-show="formVenta.sku.$invalid && !formVenta.sku.$pristine" class="alert-danger">Debe ingresar un SKU de garant&iacute;a correcto</p>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-6 col-form-label">Descripci&oacute;n: </div>
+            <div class="col-md-6"><input type="text" ng-model="garantia.Descripcion" class="form-control" readonly="readonly" /></div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-6 col-form-label">Total comisi&oacute;n: </div>
+            <div class="col-md-6"><input type="text" ng-model="venta.ValorComision" class="form-control" readonly="readonly" required ng-pattern="/^[0-9\.]+$/" name="valorComision" /></div>
+        </div>
+        <!--
+        <div class="row form-group">
+            <div class="col-md-6 col-form-label">Categor&iacute;a: </div>
+            <div class="col-md-6"><input type="text" ng-model="garantia.Categoria" class="form-control" readonly="readonly" /></div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-6 col-form-label">Precio sin IVA: </div>
+            <div class="col-md-6"><input type="text" ng-model="garantia.PrecioSinIva" class="form-control" readonly="readonly" /></div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-6 col-form-label">Precio con IVA: </div>
+            <div class="col-md-6"><input type="text" ng-model="garantia.PrecioConIva" class="form-control" readonly="readonly" /></div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-6 col-form-label">Porcentaje Comisi&oacute;n: </div>
+            <div class="col-md-6"><input type="text" ng-model="garantia.PorcentajeComision" class="form-control" readonly="readonly" /></div>
+        </div>
+        -->
+        <div class="row form-group">
+            <div class="col-md-12" style="text-align: right">
+                <button type="button" class="btn btn-primary" ng-click="guardarVenta(formVenta.$valid)" ng-disabled="formVenta.$invalid">Guardar</button>
+            </div>
+        </div>
+    </form>
 </div>

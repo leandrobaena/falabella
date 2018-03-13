@@ -51,13 +51,16 @@ namespace Homecenter.Data
         /// <param name="asesorId">Identificador del asesor que realiza la venta</param>
         /// <param name="sku">Código de la garantía vendida</param>
         /// <returns>Venta insertada</returns>
-        public Venta Insertar(int asesorId, string sku)
+        public Venta Insertar(int asesorId, string sku, string cedulaCliente, string skuElectrodomestico, decimal valorComisionado)
         {
             Venta venta = new Venta()
             {
                 AsesorId = asesorId,
                 SKU = sku,
-                FechaRegistro = DateTime.Now
+                FechaRegistro = DateTime.Now,
+                CedulaCliente = cedulaCliente,
+                SKUElectrodomestico = skuElectrodomestico,
+                ValorComision = valorComisionado
             };
             this.ventas.Add(venta);
             this.SaveChanges();

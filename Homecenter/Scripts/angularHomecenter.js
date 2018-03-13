@@ -1,4 +1,4 @@
-﻿var app = angular.module("app", []);
+﻿var app = angular.module("app", ['ngMessages']);
 
 app.controller("asesoresController", function ($scope, $http) {
     $scope.asesores;
@@ -32,29 +32,33 @@ app.controller("asesoresController", function ($scope, $http) {
         $("#editarAsesorModal").modal("show");
     }
 
-    $scope.guardarAsesor = function () {
-        if ($scope.asesorActual.AsesorId == 0) {//Insertar
-            $http({
-                method: "post",
-                url: "/Asesores/InsertarAsesor",
-                data: JSON.stringify($scope.asesorActual),
-                dataType: "json"
-            }).then(function (response) {
-                alert("Asesor creado");
-                $scope.listarAsesores();
-                $("#editarAsesorModal").modal("hide");
-            });
+    $scope.guardarAsesor = function (valido) {
+        if (!valido) {
+            alert("Debe diligenciar correctamente el formulario");
         } else {
-            $http({
-                method: "post",
-                url: "/Asesores/ActualizarAsesor",
-                data: JSON.stringify($scope.asesorActual),
-                dataType: "json"
-            }).then(function (response) {
-                alert("Asesor actualizado");
-                $scope.listarAsesores();
-                $("#editarAsesorModal").modal("hide");
-            });
+            if ($scope.asesorActual.AsesorId == 0) {//Insertar
+                $http({
+                    method: "post",
+                    url: "/Asesores/InsertarAsesor",
+                    data: JSON.stringify($scope.asesorActual),
+                    dataType: "json"
+                }).then(function (response) {
+                    alert("Asesor creado");
+                    $scope.listarAsesores();
+                    $("#editarAsesorModal").modal("hide");
+                });
+            } else {
+                $http({
+                    method: "post",
+                    url: "/Asesores/ActualizarAsesor",
+                    data: JSON.stringify($scope.asesorActual),
+                    dataType: "json"
+                }).then(function (response) {
+                    alert("Asesor actualizado");
+                    $scope.listarAsesores();
+                    $("#editarAsesorModal").modal("hide");
+                });
+            }
         }
     };
 
@@ -79,7 +83,10 @@ app.controller("ventaController", function ($scope, $http) {
     $scope.asesor;
     $scope.venta = {
         AsesorId: 0,
-        SKU: ""
+        SKU: "",
+        CedulaCliente: "",
+        SKUElectrodomestico: "",
+        ValorComision: 0
     };
     $scope.reporte = {
         FechaInicio: "",
@@ -117,13 +124,15 @@ app.controller("ventaController", function ($scope, $http) {
                 alert("Garantía no encontrada");
             } else {
                 $scope.garantia = response.data;
-                $scope.garantia.TotalComision = ($scope.garantia.PrecioSinIva * $scope.garantia.PorcentajeComision) / 100;
+                $scope.venta.ValorComision = ($scope.garantia.PrecioSinIva * $scope.garantia.PorcentajeComision) / 100;
             }
         });
     }
 
-    $scope.guardarVenta = function () {
-        if ($scope.venta.AsesorId != 0) {//Válido
+    $scope.guardarVenta = function (valido) {
+        if (!valido || $scope.venta.ValorComision == 0 || $scope.venta.AsesorId == 0) {
+            alert("Debe diligenciar correctamente el formulario");
+        } else {
             $http({
                 method: "post",
                 url: "/Ventas/InsertarVenta",
@@ -133,13 +142,14 @@ app.controller("ventaController", function ($scope, $http) {
                 alert("Venta registrada");
                 $scope.venta.AsesorId = 0;
                 $scope.venta.SKU = "";
+                $scope.venta.CedulaCliente = "";
+                $scope.venta.SKUElectrodomestico = "";
+                $scope.venta.ValorComision = 0;
 
                 $scope.asesor.AsesorId = 0;
                 $scope.asesor.Cedula = "";
                 $scope.asesor.Nombre = "";
             });
-        } else {
-            alert("Asesor no válido");
         }
     };
 
@@ -175,7 +185,6 @@ app.controller("garantiasController", function ($scope, $http) {
     };
 
     $scope.editarGarantia = function (garantia) {
-        console.log(garantia);
         $scope.garantiaActual = garantia;
         $("#editarGarantiaModalLabel").html("Editar garantía");
         $("#editarGarantiaModal").modal("show");
@@ -195,29 +204,45 @@ app.controller("garantiasController", function ($scope, $http) {
         $("#editarGarantiaModal").modal("show");
     }
 
-    $scope.guardarGarantia = function () {
-        if ($scope.garantiaActual.GarantiaId == 0) {//Insertar
-            $http({
-                method: "post",
-                url: "/Garantias/InsertarGarantia",
-                data: JSON.stringify($scope.garantiaActual),
-                dataType: "json"
-            }).then(function (response) {
-                alert("Garantía creada");
-                $scope.listarGarantias();
-                $("#editarGarantiaModal").modal("hide");
-            });
+    $scope.guardarGarantia = function (valido) {
+        if (!valido) {
+            alert("Debe diligenciar correctamente el formulario");
         } else {
-            $http({
-                method: "post",
-                url: "/Garantias/ActualizarGarantia",
-                data: JSON.stringify($scope.garantiaActual),
-                dataType: "json"
-            }).then(function (response) {
-                alert("Garantía actualizada");
-                $scope.listarGarantias();
-                $("#editarGarantiaModal").modal("hide");
-            });
+            if ($scope.garantiaActual.GarantiaId == 0) {//Insertar
+                $http({
+                    method: "post",
+                    url: "/Garantias/InsertarGarantia",
+                    data: JSON.stringify($scope.garantiaActual, function (key, value) {
+                        if (key == "PrecioSinIva" || key == "PrecioConIva" || key == "PorcentajeComision") {
+                            return ("" + value).replace(".", ",");
+                        } else {
+                            return value;
+                        }
+                    }),
+                    dataType: "json"
+                }).then(function (response) {
+                    alert("Garantía creada");
+                    $scope.listarGarantias();
+                    $("#editarGarantiaModal").modal("hide");
+                });
+            } else {
+                $http({
+                    method: "post",
+                    url: "/Garantias/ActualizarGarantia",
+                    data: JSON.stringify($scope.garantiaActual, function (key, value) {
+                        if (key == "PrecioSinIva" || key == "PrecioConIva" || key == "PorcentajeComision") {
+                            return ("" + value).replace(".", ",");
+                        } else {
+                            return value;
+                        }
+                    }),
+                    dataType: "json"
+                }).then(function (response) {
+                    alert("Garantía actualizada");
+                    $scope.listarGarantias();
+                    $("#editarGarantiaModal").modal("hide");
+                });
+            }
         }
     };
 

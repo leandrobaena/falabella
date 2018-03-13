@@ -148,6 +148,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\GarantiasController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\VentasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AsesoresController.cs" />
@@ -198,6 +199,7 @@
     <Content Include="fonts\webfonts\fa-solid-900.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\angular-messages.min.js" />
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
@@ -267,7 +269,9 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -294,6 +298,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Ventas\Reporte.cshtml" />
     <Content Include="Views\Garantias\Listado.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,5 +1,7 @@
 ﻿body {
     padding: 10px;
+    font-family: sans-serif, Arial;
+    font-size: 14px;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -20,4 +22,34 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.navbar {
+    background-color: #57595b;
+}
+
+    .navbar ul li a {
+        color: #FFF;
+    }
+
+.headerTable {
+    background-color: #30b131;
+    padding: 3px;
+    margin-top: 10px;
+}
+
+.headerColumn {
+    color: #FFF;
+    font-weight: bold;
+    text-align: center;
+}
+
+.tableResult .bodyTable {
+    border-bottom: 1px solid #c8c8c8
+}
+
+.headerPage {
+    color: #666;
+    padding: 10px;
+    text-align: center;
 }
