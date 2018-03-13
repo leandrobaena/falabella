@@ -24,7 +24,7 @@ namespace Homecenter.Controllers
         {
             if (Session["usuario"] == null)
             {
-                return new RedirectResult("/Account/Login");
+                return new RedirectResult("~/Account/Login");
             }
             return View();
         }
@@ -49,7 +49,7 @@ namespace Homecenter.Controllers
         {
             if (Session["usuario"] == null)
             {
-                return new RedirectResult("/Account/Login");
+                return new RedirectResult("~/Account/Login");
             }
             return View();
         }
@@ -62,7 +62,7 @@ namespace Homecenter.Controllers
         {
             if (Session["usuario"] == null)
             {
-                return new RedirectResult("/Account/Login");
+                return new RedirectResult("~/Account/Login");
             }
             return View();
         }
@@ -75,7 +75,7 @@ namespace Homecenter.Controllers
         {
             if (Session["usuario"] == null)
             {
-                return new RedirectResult("/Account/Login");
+                return new RedirectResult("~/Account/Login");
             }
             return View();
         }
@@ -135,7 +135,7 @@ namespace Homecenter.Controllers
         /// <returns>Archivo excel con el reporte para descarga</returns>
         public void GenerarReporte(string fechaInicio, string fechaFin)
         {
-            string path = Server.MapPath("/reportes");
+            string path = Server.MapPath("~/reportes");
             string filepath = path + "/reporte.xlsx";
 
             SpreadsheetDocument archivoExcel = SpreadsheetDocument.Create(filepath, SpreadsheetDocumentType.Workbook);

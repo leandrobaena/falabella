@@ -1,4 +1,5 @@
 ﻿var numRegistrosXPagina = 25;
+var sitio = "";
 
 //Aplicación angular
 var app = angular.module("app", ['ngMessages']);
@@ -20,13 +21,13 @@ app.controller("asesoresController", function ($scope, $http) {
         }
         $http({
             method: "post",
-            url: "/Asesores/ContarAsesores",
+            url: sitio + "/Asesores/ContarAsesores",
             dataType: "json"
         }).then(function (response) {
             $scope.ultimaPagina = Math.floor((response.data - 1) / numRegistrosXPagina);
             $http({
                 method: "post",
-                url: "/Asesores/ListarAsesores",
+                url: sitio + "/Asesores/ListarAsesores",
                 data: {
                     inicio: (pagina * numRegistrosXPagina),
                     numRegistros: numRegistrosXPagina
@@ -67,7 +68,7 @@ app.controller("asesoresController", function ($scope, $http) {
             if ($scope.asesorActual.AsesorId == 0) {//Insertar
                 $http({
                     method: "post",
-                    url: "/Asesores/InsertarAsesor",
+                    url: sitio + "/Asesores/InsertarAsesor",
                     data: JSON.stringify($scope.asesorActual),
                     dataType: "json"
                 }).then(function (response) {
@@ -78,7 +79,7 @@ app.controller("asesoresController", function ($scope, $http) {
             } else {
                 $http({
                     method: "post",
-                    url: "/Asesores/ActualizarAsesor",
+                    url: sitio + "/Asesores/ActualizarAsesor",
                     data: JSON.stringify($scope.asesorActual),
                     dataType: "json"
                 }).then(function (response) {
@@ -96,7 +97,7 @@ app.controller("asesoresController", function ($scope, $http) {
             $scope.asesorActual = asesor;
             $http({
                 method: "post",
-                url: "/Asesores/EliminarAsesor",
+                url: sitio + "/Asesores/EliminarAsesor",
                 data: JSON.stringify($scope.asesorActual),
                 dataType: "json"
             }).then(function (response) {
@@ -130,7 +131,7 @@ app.controller("ventaController", function ($scope, $http) {
     $scope.buscarAsesorXCedula = function () {
         $http({
             method: "post",
-            url: "/Asesores/BuscarXCedula",
+            url: sitio + "/Asesores/BuscarXCedula",
             data: {
                 cedula: $scope.asesor.Cedula
             },
@@ -149,7 +150,7 @@ app.controller("ventaController", function ($scope, $http) {
     $scope.buscarGarantiaXSKU = function () {
         $http({
             method: "post",
-            url: "/Garantias/BuscarXSKU",
+            url: sitio + "/Garantias/BuscarXSKU",
             data: {
                 sku: $scope.venta.SKU
             },
@@ -171,7 +172,7 @@ app.controller("ventaController", function ($scope, $http) {
         } else {
             $http({
                 method: "post",
-                url: "/Ventas/InsertarVenta",
+                url: sitio + "/Ventas/InsertarVenta",
                 data: JSON.stringify($scope.venta),
                 dataType: "json"
             }).then(function (response) {
@@ -195,14 +196,14 @@ app.controller("ventaController", function ($scope, $http) {
         $scope.reporte.FechaFin = $("#fechaFin").val();
         $http({
             method: "post",
-            url: "/Ventas/GenerarReporte",
+            url: sitio + "/Ventas/GenerarReporte",
             data: {
                 fechaInicio: $scope.reporte.FechaInicio,
                 fechaFin: $scope.reporte.FechaFin
             },
             dataType: "json"
         }).then(function () {
-            window.open("/reportes/reporte.xlsx");
+            window.open(sitio + "/reportes/reporte.xlsx");
         });
     };
 
@@ -219,7 +220,7 @@ app.controller("ventaController", function ($scope, $http) {
 
         $http({
             method: "post",
-            url: "/Ventas/ContarComisiones",
+            url: sitio + "/Ventas/ContarComisiones",
             data: {
                 fechaInicio: $scope.reporte.FechaInicio,
                 fechaFin: $scope.reporte.FechaFin
@@ -229,7 +230,7 @@ app.controller("ventaController", function ($scope, $http) {
             $scope.ultimaPagina = Math.floor((response.data - 1) / numRegistrosXPagina);
             $http({
                 method: "post",
-                url: "/Ventas/ListarComisiones",
+                url: sitio + "/Ventas/ListarComisiones",
                 data: {
                     fechaInicio: $scope.reporte.FechaInicio,
                     fechaFin: $scope.reporte.FechaFin,
@@ -267,13 +268,13 @@ app.controller("garantiasController", function ($scope, $http) {
         }
         $http({
             method: "post",
-            url: "/Garantias/ContarGarantias",
+            url: sitio + "/Garantias/ContarGarantias",
             dataType: "json"
         }).then(function (response) {
             $scope.ultimaPagina = Math.floor((response.data - 1) / numRegistrosXPagina);
             $http({
                 method: "post",
-                url: "/Garantias/ListarGarantias",
+                url: sitio + "/Garantias/ListarGarantias",
                 data: {
                     inicio: (pagina * numRegistrosXPagina),
                     numRegistros: numRegistrosXPagina
@@ -315,7 +316,7 @@ app.controller("garantiasController", function ($scope, $http) {
             if ($scope.garantiaActual.GarantiaId == 0) {//Insertar
                 $http({
                     method: "post",
-                    url: "/Garantias/InsertarGarantia",
+                    url: sitio + "/Garantias/InsertarGarantia",
                     data: JSON.stringify($scope.garantiaActual, function (key, value) {
                         if (key == "PrecioSinIva" || key == "PrecioConIva" || key == "PorcentajeComision") {
                             return ("" + value).replace(".", ",");
@@ -332,7 +333,7 @@ app.controller("garantiasController", function ($scope, $http) {
             } else {
                 $http({
                     method: "post",
-                    url: "/Garantias/ActualizarGarantia",
+                    url: sitio + "/Garantias/ActualizarGarantia",
                     data: JSON.stringify($scope.garantiaActual, function (key, value) {
                         if (key == "PrecioSinIva" || key == "PrecioConIva" || key == "PorcentajeComision") {
                             return ("" + value).replace(".", ",");
@@ -356,7 +357,7 @@ app.controller("garantiasController", function ($scope, $http) {
             $scope.garantiaActual = garantia;
             $http({
                 method: "post",
-                url: "/Garantias/EliminarGarantia",
+                url: sitio + "/Garantias/EliminarGarantia",
                 data: JSON.stringify($scope.garantiaActual),
                 dataType: "json"
             }).then(function (response) {

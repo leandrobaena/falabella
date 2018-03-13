@@ -16,7 +16,7 @@ namespace Homecenter.Controllers
         {
             if (Session["usuario"] == null)
             {
-                return new RedirectResult("/Account/Login");
+                return new RedirectResult("~/Account/Login");
             }
             return View();
         }
