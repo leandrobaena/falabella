@@ -44,6 +44,15 @@ namespace Homecenter.Data
         }
 
         /// <summary>
+        /// Trae el total de asesores
+        /// </summary>
+        /// <returns>Total de asesores</returns>
+        public int Contar()
+        {
+            return asesores.Count();
+        }
+
+        /// <summary>
         /// Actualiza un asesor
         /// </summary>
         /// <param name="asesorId">Identificador del asesor</param>

@@ -56,6 +56,34 @@ namespace Homecenter.Business
             VentaData data = new VentaData(this.cadenaConexion);
             return data.DataReporte(fechaInicio, fechaFin);
         }
+
+        /// <summary>
+        /// Trae el total de comisiones
+        /// </summary>
+        /// <param name="fechaInicio">Fecha desde la cual se genera el reporte</param>
+        /// <param name="fechaFin">Fecha hasta la cual se genera el reporte</param>
+        /// <param name="asesorId">Identificador del asesor al que se le consultan las comisiones</param>
+        /// <returns>Total de comisiones</returns>
+        public int ContarComisiones(string fechaInicio, string fechaFin, int asesorId)
+        {
+            VentaData data = new VentaData(this.cadenaConexion);
+            return data.ContarComisiones(fechaInicio, fechaFin, asesorId);
+        }
+
+        /// <summary>
+        /// Comisiones de un asesor
+        /// </summary>
+        /// <param name="fechaInicio">Fecha desde la cual se genera el reporte</param>
+        /// <param name="fechaFin">Fecha hasta la cual se genera el reporte</param>
+        /// <param name="asesorId">Identificador del asesor al que se le consultan las comisiones</param>
+        /// <param name="inicio">Registro inicial</param>
+        /// <param name="numRegitros">Número de registros a mostrar</param>
+        /// <returns>Comisiones del asesor</returns>
+        public List<Venta> ListarComisiones(string fechaInicio, string fechaFin, int asesorId, int inicio, int numRegitros)
+        {
+            VentaData data = new VentaData(this.cadenaConexion);
+            return data.ListarComisiones(fechaInicio, fechaFin, asesorId, inicio, numRegitros);
+        }
         #endregion
 
         #region Atributos

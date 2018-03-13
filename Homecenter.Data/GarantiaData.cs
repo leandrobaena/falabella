@@ -32,6 +32,15 @@ namespace Homecenter.Data
         }
 
         /// <summary>
+        /// Trae el total de garantías
+        /// </summary>
+        /// <returns>Total de garantías</returns>
+        public int Contar()
+        {
+            return garantias.Count();
+        }
+
+        /// <summary>
         /// Trae el listado de garantías de forma paginada
         /// </summary>
         /// <param name="inicio">Registro inicial a traer</param>

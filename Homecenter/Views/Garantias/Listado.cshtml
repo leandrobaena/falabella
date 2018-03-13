@@ -3,7 +3,7 @@
     ViewBag.Title = "Listado de garantías";
 }
 <h1 class="headerPage">Listado de garant&iacute;as</h1>
-<div ng-app="app" ng-controller="garantiasController" ng-init="listarGarantias()">
+<div ng-app="app" ng-controller="garantiasController" ng-init="listarGarantias(0)">
     <div class="row">
         <div class="col-md-12">
             <input type="button" class="btn btn-primary" value="Insertar" ng-click="insertarGarantia()" />
@@ -37,6 +37,13 @@
                     </div>
                 }
             }
+        </div>
+        <div class="row">
+            <span class="fas fa-step-backward btn" aria-hidden="true" ng-click="listarGarantias(0)"></span>&nbsp;
+            <span class="fas fa-backward btn" aria-hidden="true" ng-click="listarGarantias(paginaActual - 1)"></span>&nbsp;
+            <span>Página {{paginaActual + 1}} de {{ultimaPagina + 1}}</span>&nbsp;
+            <span class="fas fa-forward btn" aria-hidden="true" ng-click="listarGarantias(paginaActual + 1)"></span>&nbsp;
+            <span class="fas fa-step-forward btn" aria-hidden="true" ng-click="listarGarantias(ultimaPagina)"></span>
         </div>
     </div>
     <!-- Modal -->

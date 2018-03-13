@@ -299,6 +299,7 @@
     <Content Include="Views\Ventas\Reporte.cshtml" />
     <Content Include="Views\Garantias\Listado.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Ventas\ReporteComisiones.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

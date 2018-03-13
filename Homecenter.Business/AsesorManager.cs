@@ -1,6 +1,7 @@
 ﻿using Homecenter.Data;
 using Homecenter.Entidades;
 using System.Collections.Generic;
+using System;
 
 namespace Homecenter.Business
 {
@@ -42,6 +43,16 @@ namespace Homecenter.Business
         {
             AsesorData data = new AsesorData(this.cadenaConexion);
             return data.Listar(inicio, numRegistros);
+        }
+
+        /// <summary>
+        /// Cuenta cuántos asesores existen en total
+        /// </summary>
+        /// <returns>Cuántos asesores existen en total</returns>
+        public int Contar()
+        {
+            AsesorData data = new AsesorData(this.cadenaConexion);
+            return data.Contar();
         }
 
         /// <summary>

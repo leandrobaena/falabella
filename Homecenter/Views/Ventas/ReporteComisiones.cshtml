@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Listado de comisiones";
+}
+<h1 class="headerPage">Listado de comisiones</h1>
+<div ng-app="app" ng-controller="ventaController">
+    <div class="row form-group">
+        <div class="col-md-3 col-form-label">Fecha inicio: </div>
+        <div class="col-md-3"><input type="text" ng-model="reporte.FechaInicio" class="form-control" id="fechaInicio" /></div>
+        <div class="col-md-3 col-form-label">Fecha fin: </div>
+        <div class="col-md-3"><input type="text" ng-model="reporte.FechaFin" class="form-control" id="fechaFin" /></div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-12" style="text-align: right">
+            <button type="button" class="btn btn-primary" ng-click="generarReporteComisiones(0)">Generar</button>
+        </div>
+    </div>
+    <div class="tableResult">
+        <div class="row headerTable">
+            <div class="col-md-3 headerColumn">Fecha</div>
+            <div class="col-md-2 headerColumn">SKU Electrodom&eacute;stico</div>
+            <div class="col-md-2 headerColumn">C&eacute;dula cliente</div>
+            <div class="col-md-2 headerColumn">SKU Garant&iacute;a</div>
+            <div class="col-md-3 headerColumn">Valor comisi&oacute;n</div>
+        </div>
+        <div class="row bodyTable" ng-repeat="venta in ventas">
+            <div class="col-md-3">{{venta.FechaRegistro | date:'yyyy-MM-dd HH:mm:ss'}}</div>
+            <div class="col-md-2">{{venta.SKUElectrodomestico}}</div>
+            <div class="col-md-2">{{venta.CedulaCliente}}</div>
+            <div class="col-md-2">{{venta.SKU}}</div>
+            <div class="col-md-3">$ {{venta.ValorComision}}</div>
+        </div>
+    </div>
+    <div class="row">
+        <span class="fas fa-step-backward btn" aria-hidden="true" ng-click="generarReporteComisiones(0)"></span>&nbsp;
+        <span class="fas fa-backward btn" aria-hidden="true" ng-click="generarReporteComisiones(paginaActual - 1)"></span>&nbsp;
+        <span>Página {{paginaActual + 1}} de {{ultimaPagina + 1}}</span>&nbsp;
+        <span class="fas fa-forward btn" aria-hidden="true" ng-click="generarReporteComisiones(paginaActual + 1)"></span>&nbsp;
+        <span class="fas fa-step-forward btn" aria-hidden="true" ng-click="generarReporteComisiones(ultimaPagina)"></span>
+    </div>
+</div>
+<script>
+    $('#fechaInicio').datepicker({
+        format: "yyyy-mm-dd",
+        uiLibrary: 'bootstrap4',
+        iconsLibrary: 'fontawesome',
+        locale: "es-co"
+    });
+
+    $('#fechaFin').datepicker({
+        format: "yyyy-mm-dd",
+        uiLibrary: 'bootstrap4',
+        iconsLibrary: 'fontawesome',
+        locale: "es-co"
+    });
+</script>

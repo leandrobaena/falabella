@@ -1,25 +1,52 @@
-﻿var app = angular.module("app", ['ngMessages']);
+﻿var numRegistrosXPagina = 25;
 
+//Aplicación angular
+var app = angular.module("app", ['ngMessages']);
+
+//Controlador para el listado de asesores
 app.controller("asesoresController", function ($scope, $http) {
     $scope.asesores;
     $scope.asesorActual;
+    $scope.paginaActual = 0;
+    $scope.ultimaPagina = 0;
 
-    $scope.listarAsesores = function () {
+    //Trae la lista de asesores
+    $scope.listarAsesores = function (pagina) {
+        if (pagina < 0) {
+            pagina = 0;
+        }
+        if (pagina > $scope.ultimaPagina) {
+            pagina = $scope.ultimaPagina;
+        }
         $http({
-            method: "get",
-            url: "/Asesores/ListarAsesores?inicio=" + 0 + "&numRegistros=" + 10,
+            method: "post",
+            url: "/Asesores/ContarAsesores",
             dataType: "json"
         }).then(function (response) {
-            $scope.asesores = response.data;
+            $scope.ultimaPagina = Math.floor((response.data - 1) / numRegistrosXPagina);
+            $http({
+                method: "post",
+                url: "/Asesores/ListarAsesores",
+                data: {
+                    inicio: (pagina * numRegistrosXPagina),
+                    numRegistros: numRegistrosXPagina
+                },
+                dataType: "json"
+            }).then(function (response) {
+                $scope.paginaActual = pagina;
+                $scope.asesores = response.data;
+            });
         });
     };
 
+    //Muestra el formulario de edición de un asesor
     $scope.editarAsesor = function (asesor) {
         $scope.asesorActual = asesor;
         $("#editarAsesorModalLabel").html("Editar asesor");
         $("#editarAsesorModal").modal("show");
     }
 
+    //Muestra el formulario de inserción de un asesor
     $scope.insertarAsesor = function () {
         $scope.asesorActual = {
             AsesorId: 0,
@@ -32,6 +59,7 @@ app.controller("asesoresController", function ($scope, $http) {
         $("#editarAsesorModal").modal("show");
     }
 
+    //Actualiza o inserta un asesor
     $scope.guardarAsesor = function (valido) {
         if (!valido) {
             alert("Debe diligenciar correctamente el formulario");
@@ -62,6 +90,7 @@ app.controller("asesoresController", function ($scope, $http) {
         }
     };
 
+    //Elimina un asesor
     $scope.eliminarAsesor = function (asesor) {
         if (confirm("¿Está seguro que desea eliminar el asesor?")) {
             $scope.asesorActual = asesor;
@@ -79,6 +108,7 @@ app.controller("asesoresController", function ($scope, $http) {
     }
 });
 
+//Controlador para el listado de ventas
 app.controller("ventaController", function ($scope, $http) {
     $scope.asesor;
     $scope.venta = {
@@ -92,7 +122,11 @@ app.controller("ventaController", function ($scope, $http) {
         FechaInicio: "",
         FechaFin: ""
     };
+    $scope.ventas;
+    $scope.paginaActual = 0;
+    $scope.ultimaPagina = 0;
 
+    //Busca un asesor por su cédula
     $scope.buscarAsesorXCedula = function () {
         $http({
             method: "post",
@@ -111,6 +145,7 @@ app.controller("ventaController", function ($scope, $http) {
         });
     }
 
+    //Busca una garantía por su SKU
     $scope.buscarGarantiaXSKU = function () {
         $http({
             method: "post",
@@ -129,6 +164,7 @@ app.controller("ventaController", function ($scope, $http) {
         });
     }
 
+    //Inserta una nueva venta
     $scope.guardarVenta = function (valido) {
         if (!valido || $scope.venta.ValorComision == 0 || $scope.venta.AsesorId == 0) {
             alert("Debe diligenciar correctamente el formulario");
@@ -153,6 +189,7 @@ app.controller("ventaController", function ($scope, $http) {
         }
     };
 
+    //Genera el reporte de venta
     $scope.generarReporte = function () {
         $scope.reporte.FechaInicio = $("#fechaInicio").val();
         $scope.reporte.FechaFin = $("#fechaFin").val();
@@ -168,28 +205,94 @@ app.controller("ventaController", function ($scope, $http) {
             window.open("/reportes/reporte.xlsx");
         });
     };
+
+    //Muestra el listado de comisiones del asesor logueado
+    $scope.generarReporteComisiones = function (pagina) {
+        if (pagina < 0) {
+            pagina = 0;
+        }
+        if (pagina > $scope.ultimaPagina) {
+            pagina = $scope.ultimaPagina;
+        }
+        $scope.reporte.FechaInicio = $("#fechaInicio").val();
+        $scope.reporte.FechaFin = $("#fechaFin").val();
+
+        $http({
+            method: "post",
+            url: "/Ventas/ContarComisiones",
+            data: {
+                fechaInicio: $scope.reporte.FechaInicio,
+                fechaFin: $scope.reporte.FechaFin
+            },
+            dataType: "json"
+        }).then(function (response) {
+            $scope.ultimaPagina = Math.floor((response.data - 1) / numRegistrosXPagina);
+            $http({
+                method: "post",
+                url: "/Ventas/ListarComisiones",
+                data: {
+                    fechaInicio: $scope.reporte.FechaInicio,
+                    fechaFin: $scope.reporte.FechaFin,
+                    inicio: (pagina * numRegistrosXPagina),
+                    numRegitros: numRegistrosXPagina
+                },
+                dataType: "json"
+            }).then(function (response) {
+                $scope.paginaActual = pagina;
+                $scope.ventas = response.data;
+                $scope.ventas.forEach(function (venta) {
+                    console.log(venta);
+                    venta.FechaRegistro = new Date(parseInt(venta.FechaRegistro.replace("/Date(", "").replace(")/", ""), 10));
+                    console.log(venta);
+                });
+            });
+        });
+    };
 });
 
+//Controlador para el listado de garantías
 app.controller("garantiasController", function ($scope, $http) {
     $scope.garantias;
     $scope.garantiaActual;
+    $scope.paginaActual = 0;
+    $scope.ultimaPagina = 0;
 
-    $scope.listarGarantias = function () {
+    //Listado de garantías
+    $scope.listarGarantias = function (pagina) {
+        if (pagina < 0) {
+            pagina = 0;
+        }
+        if (pagina > $scope.ultimaPagina) {
+            pagina = $scope.ultimaPagina;
+        }
         $http({
-            method: "get",
-            url: "/Garantias/ListarGarantias?inicio=" + 0 + "&numRegistros=" + 10,
+            method: "post",
+            url: "/Garantias/ContarGarantias",
             dataType: "json"
         }).then(function (response) {
-            $scope.garantias = response.data;
+            $scope.ultimaPagina = Math.floor((response.data - 1) / numRegistrosXPagina);
+            $http({
+                method: "post",
+                url: "/Garantias/ListarGarantias",
+                data: {
+                    inicio: (pagina * numRegistrosXPagina),
+                    numRegistros: numRegistrosXPagina
+                },
+                dataType: "json"
+            }).then(function (response) {
+                $scope.garantias = response.data;
+            });
         });
     };
 
+    //Muestra el formulario para editar una garantía
     $scope.editarGarantia = function (garantia) {
         $scope.garantiaActual = garantia;
         $("#editarGarantiaModalLabel").html("Editar garantía");
         $("#editarGarantiaModal").modal("show");
     }
 
+    //Muestra el formulario para insertar una garantía
     $scope.insertarGarantia = function () {
         $scope.garantiaActual = {
             GarantiaId: 0,
@@ -204,6 +307,7 @@ app.controller("garantiasController", function ($scope, $http) {
         $("#editarGarantiaModal").modal("show");
     }
 
+    //Actualiza o inserta una garantía
     $scope.guardarGarantia = function (valido) {
         if (!valido) {
             alert("Debe diligenciar correctamente el formulario");
@@ -246,6 +350,7 @@ app.controller("garantiasController", function ($scope, $http) {
         }
     };
 
+    //Elimina una garantía
     $scope.eliminarGarantia = function (garantia) {
         if (confirm("¿Está seguro que desea eliminar la garantía?")) {
             $scope.garantiaActual = garantia;

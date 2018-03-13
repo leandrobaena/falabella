@@ -68,6 +68,66 @@ namespace Homecenter.Controllers
         }
 
         /// <summary>
+        /// Muestra el formulario para listar la comisiones de un usuario
+        /// </summary>
+        /// <returns>Formulario para listar la comisiones de un usuario</returns>
+        public ActionResult ReporteComisiones()
+        {
+            if (Session["usuario"] == null)
+            {
+                return new RedirectResult("/Account/Login");
+            }
+            return View();
+        }
+
+        /// <summary>
+        /// Trae el total de comisiones
+        /// </summary>
+        /// <param name="fechaInicio">Fecha desde la cual se genera el reporte</param>
+        /// <param name="fechaFin">Fecha hasta la cual se genera el reporte</param>
+        /// <returns>Total de comisiones</returns>
+        public JsonResult ContarComisiones(string fechaInicio, string fechaFin)
+        {
+            Usuario usuario = (Usuario)Session["usuario"];
+            AsesorManager asesorManager = new AsesorManager(ConfigurationManager.ConnectionStrings["homecenter"].ConnectionString);
+            Asesor asesor = asesorManager.BuscarXCedula(usuario.Login);
+            if (asesor != null && asesor.AsesorId != 0)
+            {
+                VentaManager manager = new VentaManager(ConfigurationManager.ConnectionStrings["homecenter"].ConnectionString);
+                int listado = manager.ContarComisiones(fechaInicio, fechaFin, asesor.AsesorId);
+                return new JsonResult() { Data = listado };
+            }
+            else
+            {
+                return new JsonResult() { Data = 0 };
+            }
+        }
+
+        /// <summary>
+        /// Listado de comisiones del asesor logueado
+        /// </summary>
+        /// <param name="fechaInicio">Fecha inicio desde donde se genera el reporte</param>
+        /// <param name="fechaFin">Fecha final hasta donde se genera el reporte</param>
+        /// <param name="inicio">Registro inicial</param>
+        /// <param name="numRegitros">Número de registros a mostrar</param>
+        /// <returns>Listado de comisiones del usuario logueado</returns>
+        public JsonResult ListarComisiones(string fechaInicio, string fechaFin, int inicio, int numRegitros)
+        {
+            Usuario usuario = (Usuario)Session["usuario"];
+            AsesorManager asesorManager = new AsesorManager(ConfigurationManager.ConnectionStrings["homecenter"].ConnectionString);
+            Asesor asesor = asesorManager.BuscarXCedula(usuario.Login);
+            if(asesor != null && asesor.AsesorId != 0)
+            {
+                VentaManager manager = new VentaManager(ConfigurationManager.ConnectionStrings["homecenter"].ConnectionString);
+                var listado = manager.ListarComisiones(fechaInicio, fechaFin, asesor.AsesorId, inicio, numRegitros);
+                return new JsonResult() { Data = listado };
+            } else
+            {
+                return new JsonResult() { Data = null };
+            }
+        }
+
+        /// <summary>
         /// Crea un reporte en un archivo excel
         /// </summary>
         /// <param name="fechaInicio">Fecha inicio desde donde se genera el reporte</param>

@@ -25,6 +25,17 @@ namespace Homecenter.Controllers
         }
 
         /// <summary>
+        /// Cuenta el total de garantías
+        /// </summary>
+        /// <returns>Cantidad total de garantías</returns>
+        public JsonResult ContarGarantias()
+        {
+            GarantiaManager manager = new GarantiaManager(ConfigurationManager.ConnectionStrings["homecenter"].ConnectionString);
+            int cantidad = manager.Contar();
+            return new JsonResult() { Data = cantidad };
+        }
+
+        /// <summary>
         /// Trae el listado de garantías
         /// </summary>
         /// <param name="inicio">Registro inicial</param>
@@ -34,7 +45,7 @@ namespace Homecenter.Controllers
         {
             GarantiaManager manager = new GarantiaManager(ConfigurationManager.ConnectionStrings["homecenter"].ConnectionString);
             var listado = manager.Listar(inicio, numRegistros);
-            return new JsonResult() { Data = listado, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            return new JsonResult() { Data = listado };
         }
 
         /// <summary>

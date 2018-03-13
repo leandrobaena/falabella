@@ -34,6 +34,15 @@ namespace Homecenter.Business
         }
 
         /// <summary>
+        /// Cuenta cuántas garantías existen en total
+        /// </summary>
+        /// <returns>Cuántas garantías existen en total</returns>
+        public int Contar()
+        {
+            GarantiaData data = new GarantiaData(this.cadenaConexion);
+            return data.Contar();
+        }
+        /// <summary>
         /// Lista las garantías
         /// </summary>
         /// <param name="inicio">Registro inicial</param>

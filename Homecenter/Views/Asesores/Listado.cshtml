@@ -2,7 +2,7 @@
     ViewBag.Title = "Listado de asesores";
 }
 <h1 class="headerPage">Listado de asesores</h1>
-<div ng-app="app" ng-controller="asesoresController" ng-init="listarAsesores()">
+<div ng-app="app" ng-controller="asesoresController" ng-init="listarAsesores(0)">
     <div class="row">
         <div class="col-md-12">
             <input type="button" class="btn btn-primary" value="Insertar" ng-click="insertarAsesor()" />
@@ -28,6 +28,13 @@
                 <span class="fas fa-ban btn" aria-hidden="true" ng-click="eliminarAsesor(asesor)"></span>&nbsp;
             </div>
         </div>
+        <div class="row">
+            <span class="fas fa-step-backward btn" aria-hidden="true" ng-click="listarAsesores(0)"></span>&nbsp;
+            <span class="fas fa-backward btn" aria-hidden="true" ng-click="listarAsesores(paginaActual - 1)"></span>&nbsp;
+            <span>Página {{paginaActual + 1}} de {{ultimaPagina + 1}}</span>&nbsp;
+            <span class="fas fa-forward btn" aria-hidden="true" ng-click="listarAsesores(paginaActual + 1)"></span>&nbsp;
+            <span class="fas fa-step-forward btn" aria-hidden="true" ng-click="listarAsesores(ultimaPagina)"></span>
+        </div>
     </div>
     <!-- Modal -->
     <div class="modal fade" id="editarAsesorModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -40,7 +47,7 @@
                     <div class="modal-body">
                         <div class="row form-group">
                             <div class="col-md-6 col-form-label">Nombre: </div>
-                            <div class="col-md-6"><input type="text" ng-model="asesorActual.Nombre" ng-maxlength="200" ng-minlength="1" class="form-control" required placeholder="Nombre asesor" ng-pattern="/^\w+$/" name="nombre" /></div>
+                            <div class="col-md-6"><input type="text" ng-model="asesorActual.Nombre" ng-maxlength="200" ng-minlength="1" class="form-control" required placeholder="Nombre asesor" name="nombre" /></div>
                             <p ng-show="formEditarAsesor.nombre.$invalid && !formEditarAsesor.nombre.$pristine" class="alert-danger">Debe ingresar un nombre correcto</p>
                         </div>
                         <div class="row form-group">

@@ -76,7 +76,9 @@ namespace Homecenter.Data
             parameters.Add(new SqlParameter("@login", login));
             parameters.Add(new SqlParameter("@password", password));
 
-            this.Database.SqlQuery<Usuario>("crear_usuario @login, @pasword", parameters.ToArray());
+            Usuario u = this.Database.SqlQuery<Usuario>("crear_usuario @login, @password", parameters.ToArray()).FirstOrDefault();
+
+            this.Database.ExecuteSqlCommand("INSERT INTO usuariosperfiles (UsuarioId, PerfilId) VALUES (" + u.UsuarioId + ", 2)");
         }
         #endregion
 

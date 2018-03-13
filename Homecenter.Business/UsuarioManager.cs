@@ -44,6 +44,16 @@ namespace Homecenter.Business
             UsuarioData data = new UsuarioData(this.cadenaConexion);
             return data.ListarPerfiles(usuarioLogin.UsuarioId);
         }
+
+        /// <summary>
+        /// Inserta un usuario para un asesor
+        /// </summary>
+        /// <param name="asesor">Asesor al que se le crea el usuario</param>
+        public void InsertarAsesor(Asesor asesor)
+        {
+            UsuarioData data = new UsuarioData(this.cadenaConexion);
+            data.Insertar(asesor.Cedula, asesor.Codigo);
+        }
         #endregion
 
         #region Atributos

@@ -56,8 +56,16 @@
                     </ul>
                 }
             }
+            @{
+                if (((List<Homecenter.Entidades.Perfil>)Session["perfiles"]).Where(x => x.Nombre == "Asesor").Count() > 0)
+                {
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Reporte de comisiones", "ReporteComisiones", "Ventas")</li>
+                    </ul>
+                }
+            }
             <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Cerrar sesión", "Logout", "Account")</li>
+                <li>(@Html.Label(((Homecenter.Entidades.Usuario)Session["usuario"]).Login)) - @Html.ActionLink("Cerrar sesión", "Logout", "Account")</li>
             </ul>
         </div>
     </div>

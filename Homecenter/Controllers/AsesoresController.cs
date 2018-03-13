@@ -34,7 +34,18 @@ namespace Homecenter.Controllers
         {
             AsesorManager manager = new AsesorManager(ConfigurationManager.ConnectionStrings["homecenter"].ConnectionString);
             var listado = manager.Listar(inicio, numRegistros);
-            return new JsonResult() { Data = listado, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            return new JsonResult() { Data = listado };
+        }
+
+        /// <summary>
+        /// Trae el total de asesores
+        /// </summary>
+        /// <returns>Total de asesores</returns>
+        public JsonResult ContarAsesores()
+        {
+            AsesorManager manager = new AsesorManager(ConfigurationManager.ConnectionStrings["homecenter"].ConnectionString);
+            int cantidad = manager.Contar();
+            return new JsonResult() { Data = cantidad };
         }
 
         /// <summary>
@@ -46,6 +57,8 @@ namespace Homecenter.Controllers
         {
             AsesorManager manager = new AsesorManager(ConfigurationManager.ConnectionStrings["homecenter"].ConnectionString);
             asesor = manager.Insertar(asesor);
+            UsuarioManager managerUsuario = new UsuarioManager(ConfigurationManager.ConnectionStrings["homecenter"].ConnectionString);
+            managerUsuario.InsertarAsesor(asesor);
             return new JsonResult() { Data = asesor };
         }
 

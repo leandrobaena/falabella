@@ -68,6 +68,55 @@ namespace Homecenter.Data
         }
 
         /// <summary>
+        /// Trae el total de comisiones
+        /// </summary>
+        /// <param name="fechaInicio">Fecha desde la cual se genera el reporte</param>
+        /// <param name="fechaFin">Fecha hasta la cual se genera el reporte</param>
+        /// <param name="asesorId">Identificador del asesor al que se le consultan las comisiones</param>
+        /// <returns>Total de comisiones</returns>
+        public int ContarComisiones(string fechaInicio, string fechaFin, int asesorId)
+        {
+            DateTime fecIni = DateTime.ParseExact(fechaInicio, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            DateTime fecFin = DateTime.ParseExact(fechaFin, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+            var parameters = new List<SqlParameter>();
+            parameters.Add(new SqlParameter("@fechaInicio", fechaInicio));
+            parameters.Add(new SqlParameter("@fechaFin", fechaFin));
+            parameters.Add(new SqlParameter("@asesorId", asesorId));
+
+            int contador = this.Database.SqlQuery<Venta>("reporte_comisiones @fechaInicio, @fechaFin, @asesorId", parameters.ToArray()).ToList().Count();
+
+            return contador;
+        }
+
+        /// <summary>
+        /// Reporte de comisiones de un asesor
+        /// </summary>
+        /// <param name="fechaInicio">Fecha desde la cual se genera el reporte</param>
+        /// <param name="fechaFin">Fecha hasta la cual se genera el reporte</param>
+        /// <param name="asesorId">Identificador del asesor al que se le consultan las comisiones</param>
+        /// <param name="inicio">Registro inicial</param>
+        /// <param name="numRegitros">Número de registros a mostrar</param>
+        /// <returns>Ventas del reporte</returns>
+        public List<Venta> ListarComisiones(string fechaInicio, string fechaFin, int asesorId, int inicio, int numRegitros)
+        {
+            DateTime fecIni = DateTime.ParseExact(fechaInicio, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            DateTime fecFin = DateTime.ParseExact(fechaFin, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+            var parameters = new List<SqlParameter>();
+            parameters.Add(new SqlParameter("@fechaInicio", fechaInicio));
+            parameters.Add(new SqlParameter("@fechaFin", fechaFin));
+            parameters.Add(new SqlParameter("@asesorId", asesorId));
+
+            List<Venta> reporte = this.Database.SqlQuery<Venta>("reporte_comisiones @fechaInicio, @fechaFin, @asesorId", parameters.ToArray())
+                .Skip(inicio)
+                .Take(numRegitros)
+                .ToList();
+
+            return reporte;
+        }
+
+        /// <summary>
         /// Reporte de ventas
         /// </summary>
         /// <param name="fechaInicio">Fecha desde la cual se genera el reporte</param>
@@ -76,7 +125,7 @@ namespace Homecenter.Data
         public List<ReporteVenta> DataReporte(string fechaInicio, string fechaFin)
         {
             DateTime fecIni = DateTime.ParseExact(fechaInicio, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-            DateTime fecFin = DateTime.ParseExact(fechaFin, "yyyy-MM-dd", CultureInfo.InvariantCulture).AddDays(1);
+            DateTime fecFin = DateTime.ParseExact(fechaFin, "yyyy-MM-dd", CultureInfo.InvariantCulture);
 
             var parameters = new List<SqlParameter>();
             parameters.Add(new SqlParameter("@fechaInicio", fechaInicio));
