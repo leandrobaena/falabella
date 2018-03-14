@@ -1,5 +1,6 @@
 ﻿var numRegistrosXPagina = 25;
-var sitio = "";
+var sitio = document.URL.substr(0, document.URL.lastIndexOf("/"));
+sitio = sitio.substr(0, sitio.lastIndexOf("/"));
 
 //Aplicación angular
 var app = angular.module("app", ['ngMessages']);
