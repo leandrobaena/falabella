@@ -74,7 +74,7 @@ app.controller("asesoresController", function ($scope, $http) {
                     dataType: "json"
                 }).then(function (response) {
                     alert("Asesor creado");
-                    $scope.listarAsesores();
+                    $scope.listarAsesores($scope.paginaActual);
                     $("#editarAsesorModal").modal("hide");
                 });
             } else {
@@ -85,7 +85,7 @@ app.controller("asesoresController", function ($scope, $http) {
                     dataType: "json"
                 }).then(function (response) {
                     alert("Asesor actualizado");
-                    $scope.listarAsesores();
+                    $scope.listarAsesores($scope.paginaActual);
                     $("#editarAsesorModal").modal("hide");
                 });
             }
@@ -103,7 +103,7 @@ app.controller("asesoresController", function ($scope, $http) {
                 dataType: "json"
             }).then(function (response) {
                 alert("Asesor eliminado");
-                $scope.listarAsesores();
+                $scope.listarAsesores($scope.paginaActual);
                 $("#editarAsesorModal").modal("hide");
             });
         }
@@ -243,9 +243,7 @@ app.controller("ventaController", function ($scope, $http) {
                 $scope.paginaActual = pagina;
                 $scope.ventas = response.data;
                 $scope.ventas.forEach(function (venta) {
-                    console.log(venta);
                     venta.FechaRegistro = new Date(parseInt(venta.FechaRegistro.replace("/Date(", "").replace(")/", ""), 10));
-                    console.log(venta);
                 });
             });
         });
@@ -328,7 +326,7 @@ app.controller("garantiasController", function ($scope, $http) {
                     dataType: "json"
                 }).then(function (response) {
                     alert("Garantía creada");
-                    $scope.listarGarantias();
+                    $scope.listarGarantias($scope.paginaActual);
                     $("#editarGarantiaModal").modal("hide");
                 });
             } else {
@@ -345,7 +343,7 @@ app.controller("garantiasController", function ($scope, $http) {
                     dataType: "json"
                 }).then(function (response) {
                     alert("Garantía actualizada");
-                    $scope.listarGarantias();
+                    $scope.listarGarantias($scope.paginaActual);
                     $("#editarGarantiaModal").modal("hide");
                 });
             }
@@ -363,7 +361,7 @@ app.controller("garantiasController", function ($scope, $http) {
                 dataType: "json"
             }).then(function (response) {
                 alert("Garantía eliminada");
-                $scope.listarGarantias();
+                $scope.listarGarantias($scope.paginaActual);
                 $("#editarGarantiaModal").modal("hide");
             });
         }
